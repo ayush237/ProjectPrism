@@ -12,13 +12,21 @@ logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 def run_cmd(cmd, exit_on_error=True):
     result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
     if result.returncode != 0 and exit_on_error:
-        logging.error(f"Error running '{cmd}': {result.stderr}")
+        pat = os.environ.get("GITHUB_PAT", "")
+        safe_cmd = cmd.replace(pat, "***") if pat else cmd
+        safe_err = result.stderr.replace(pat, "***") if pat else result.stderr
+        logging.error(f"Error running '{safe_cmd}': {safe_err}")
         sys.exit(1)
     return result.stdout.strip()
 
 def create_pr():
     pat = os.environ.get("GITHUB_PAT")
     repo = os.environ.get("GITHUB_REPO")
+    
+    if repo:
+        repo = repo.replace("https://github.com/", "").replace("http://github.com/", "")
+        if repo.endswith(".git"):
+            repo = repo[:-4]
     
     if not pat or not repo:
         logging.error("Missing GITHUB_PAT or GITHUB_REPO in environment variables.")
@@ -39,7 +47,7 @@ def create_pr():
     run_cmd("git commit -m 'chore: Auto-generated content & research updates'")
     
     logging.info(f"Pushing branch {branch_name} to remote...")
-    run_cmd(f"git push -u origin {branch_name}")
+    run_cmd(f"git push -u https://{pat}@github.com/{repo}.git {branch_name}")
     
     # GitHub API PR Creation
     logging.info("Raising Pull Request via GitHub API...")
