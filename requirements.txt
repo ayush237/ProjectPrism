@@ -1,0 +1,5 @@
+python-dotenv
+notion-client
+apify-client
+youtube-transcript-api
+yt-dlp

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: #333333;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
+  }
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  }
+  .header {
+    background: #1e293b;
+    color: #ffffff;
+    padding: 24px 30px;
+    text-align: center;
+  }
+  .header h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+  .section {
+    padding: 30px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .section:last-child {
+    border-bottom: none;
+  }
+  .platform-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .tag-linkedin {
+    background-color: #0a66c2;
+  }
+  .tag-instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  }
+  h2 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #0f172a;
+    font-weight: 600;
+  }
+  p {
+    margin: 0 0 16px 0;
+    font-size: 15px;
+  }
+  ul {
+    margin: 0 0 20px 0;
+    padding-left: 20px;
+  }
+  li {
+    margin-bottom: 8px;
+    font-size: 15px;
+  }
+  .ig-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .ig-table th, .ig-table td {
+    border: 1px solid #e2e8f0;
+    padding: 16px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .ig-table th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    color: #475569;
+  }
+  .cue-cell {
+    width: 50%;
+    color: #475569;
+  }
+  .script-cell {
+    width: 50%;
+    font-weight: 500;
+    color: #0f172a;
+  }
+  [contenteditable="true"] {
+    outline: none;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    border-radius: 4px;
+  }
+  [contenteditable="true"]:hover {
+    background-color: #f0fdf4;
+    box-shadow: 0 0 0 2px #bbf7d0;
+  }
+  [contenteditable="true"]:focus {
+    background-color: #e0e7ff;
+    box-shadow: 0 0 0 2px #818cf8;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1 contenteditable="true">Social Media Content Digest</h1>
+  </div>
+
+  <!-- LinkedIn Section -->
+  <div class="section">
+    <span class="platform-tag tag-linkedin">LinkedIn Post</span>
+    <h2 contenteditable="true">The PEFT Paradigm Shift</h2>
+    <p contenteditable="true">You don't need a multi-node GPU cluster to fine-tune a 65B-parameter LLM. Assuming you do is rapidly becoming an architectural anti-pattern.</p>
+    <p contenteditable="true">Let's look at the infrastructure constraints of full-parameter fine-tuning. Updating 65 billion parameters traditionally requires over 780 GB of VRAM just to manage the gradients and optimizer states. For most domain-specific applications, this is computationally prohibitive.</p>
+    <p contenteditable="true">Parameter-Efficient Fine-Tuning (PEFT) via QLoRA circumvents this bottleneck by fundamentally altering the memory-compute trade-off.</p>
+    <p contenteditable="true">The architecture works by freezing the foundational model weights and heavily quantizing them to 4-bit NormalFloat (NF4) using Double Quantization. Instead of updating these massive base tensors, we inject small, trainable low-rank decomposition matrices (typically rank 8 or 16) directly into the Transformer layers.</p>
+    <p contenteditable="true">The metrics validate the design:</p>
+    <ul>
+      <li contenteditable="true">Trainable parameters are reduced to roughly 0.01% to 0.1% of the total model.</li>
+      <li contenteditable="true">The fine-tuning memory footprint for a 65B model drops from &gt;780 GB to ~48 GB.</li>
+      <li contenteditable="true">We observe virtually zero degradation in downstream task performance compared to a full 16-bit fine-tuning baseline.</li>
+    </ul>
+    <p contenteditable="true">From a systems engineering perspective, this shifts the paradigm. It decouples model specialization from exorbitant infrastructure overhead, enabling rapid, local adaptation of foundational models on a single professional GPU.</p>
+    <p contenteditable="true">For those of you designing multi-tenant LLM architectures: how are you handling the latency and VRAM trade-offs when dynamically swapping multiple LoRA adapters at inference time, as opposed to statically merging the weights into the base model?</p>
+  </div>
+
+  <!-- Instagram Section -->
+  <div class="section">
+    <span class="platform-tag tag-instagram">Instagram Reel Script</span>
+    <h2 contenteditable="true">Stop Wasting GPU $$</h2>
+    <table class="ig-table">
+      <thead>
+        <tr>
+          <th contenteditable="true">Visual/Audio Cue</th>
+          <th contenteditable="true">Spoken Script</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cue-cell" contenteditable="true"><strong>B-Roll:</strong> Fast, snappy jump-cut. Creator looking directly at the camera, holding a massive, overflowing hiking backpack. <br><br><strong>Text on screen:</strong> "Stop wasting GPU $$ 🛑"</td>
+          <td class="script-cell" contenteditable="true">Stop fine-tuning massive AI models the old way. You're wasting time and money.</td>
+        </tr>
+        <tr>
+          <td class="cue-cell" contenteditable="true"><strong>B-Roll:</strong> Creator drops the heavy bag on the floor with a loud <em>thud</em>. Screen shakes slightly. <br><br><strong>Text on screen:</strong> "Base LLM = 100lb Backpack 🎒"</td>
+          <td class="script-cell" contenteditable="true">Think of a massive 65-billion parameter LLM like a 100-pound hiking backpack.</td>
+        </tr>
+        <tr>
+          <td class="cue-cell" contenteditable="true"><strong>B-Roll:</strong> Creator furiously unpacking hundreds of items from the bag, looking stressed and sweaty. <br><br><strong>Audio:</strong> Fast-forward tape squeal. <br><br><strong>Text on screen:</strong> "Full Fine-Tuning: &gt;780GB VRAM 🥵"</td>
+          <td class="script-cell" contenteditable="true">Old-school "full fine-tuning" means emptying and repacking all 100 pounds just to change your socks. It requires a massive 780-gigabyte GPU server cluster.</td>
+        </tr>
+        <tr>
+          <td class="cue-cell" contenteditable="true"><strong>B-Roll:</strong> Smooth transition. Backpack is now covered in frost/ice (VFX). Creator effortlessly clips a sleek, bright neon fanny pack onto the outside of it. <br><br><strong>Text on screen:</strong> "LoRA: Train only 0.01% 🤯"</td>
+          <td class="script-cell" contenteditable="true">Enter <strong>LoRA</strong>. Instead of repacking everything, you <em>freeze</em> the heavy bag, and just clip a tiny, customized pouch to the outside. You only update 0.01% of the model.</td>
+        </tr>
+        <tr>
+          <td class="cue-cell" contenteditable="true"><strong>B-Roll:</strong> Creator uses an industrial vacuum sealer on the massive backpack, visually shrinking it into a tiny, dense, plastic-wrapped brick. <br><br><strong>Audio:</strong> Loud vacuum <em>swoosh</em>. <br><br><strong>Text on screen:</strong> "QLoRA: 4-bit Quantization 🗜️"</td>
+          <td class="script-cell" contenteditable="true">Then there's <strong>QLoRA</strong>. It takes that massive backpack and vacuum-seals the weights down to 4-bits.</td>
+        </tr>
+        <tr>
+          <td class="cue-cell" contenteditable="true"><strong>B-Roll:</strong> Split screen. Left: A burning pile of money (crossed out). Right: A sleek gaming PC. <br><br><strong>Text on screen:</strong> "780GB ⬇️ 48GB"</td>
+          <td class="script-cell" contenteditable="true">It violently shrinks the memory footprint from over 780 gigs down to just 48, with zero performance loss.</td>
+        </tr>
+        <tr>
+          <td class="cue-cell" contenteditable="true"><strong>B-Roll:</strong> Creator points to the camera, smiling, leaning on their standard desktop PC setup. <br><br><strong>Text on screen:</strong> "AI on Consumer Hardware 💻✨"</td>
+          <td class="script-cell" contenteditable="true">The result? You can now build highly specialized, custom AI directly on a standard consumer graphics card.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

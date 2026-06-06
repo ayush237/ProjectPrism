@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@300;400;600;700&display=swap');
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+/* LinkedIn Styles */
+body.linkedin-theme {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    color: #e2e8f0;
+}
+
+.linkedin-theme .container {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.linkedin-theme .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 16px;
+}
+
+.linkedin-theme .profile-pic {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    margin-right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.linkedin-theme .header-text h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+.linkedin-theme .header-text p {
+    margin: 4px 0 0;
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+
+.linkedin-theme .post-content {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #cbd5e1;
+}
+
+.linkedin-theme .post-content p {
+    margin-bottom: 16px;
+}
+
+.linkedin-theme .post-content ol {
+    margin-bottom: 16px;
+    padding-left: 20px;
+    background: rgba(0,0,0,0.2);
+    padding: 20px 20px 20px 40px;
+    border-radius: 8px;
+    border-left: 3px solid #3b82f6;
+}
+
+.linkedin-theme .post-content li {
+    margin-bottom: 8px;
+}
+
+.linkedin-theme .post-content li:last-child {
+    margin-bottom: 0;
+}
+
+/* Instagram Styles */
+body.instagram-theme {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #09090b 0%, #18181b 100%);
+    color: #fafafa;
+}
+
+.instagram-theme .container {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.instagram-theme h1 {
+    background: -webkit-linear-gradient(45deg, #ec4899, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 0;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+
+.instagram-theme .script-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 16px;
+}
+
+.instagram-theme .script-table th {
+    text-align: left;
+    padding: 0 24px;
+    color: #a1a1aa;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.85rem;
+}
+
+.instagram-theme .script-table td {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 24px;
+    vertical-align: top;
+    line-height: 1.6;
+}
+
+.instagram-theme .script-table td:first-child {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    width: 45%;
+    border-left: 4px solid #ec4899;
+}
+
+.instagram-theme .script-table td:last-child {
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    font-size: 1.1rem;
+    color: #e4e4e7;
+    font-weight: 300;
+}
+
+.instagram-theme .cue-time {
+    font-weight: 700;
+    color: #f472b6;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+.instagram-theme .cue-desc {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    font-weight: 400;
+}
+
+.instagram-theme .cue-text {
+    display: block;
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: rgba(236, 72, 153, 0.1);
+    border-radius: 8px;
+    color: #fce7f3;
+    font-size: 0.9rem;
+    font-family: monospace;
+    border: 1px solid rgba(236, 72, 153, 0.2);
+}
+
+/* Editor Functionality */
+[contenteditable="true"] {
+    outline: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    cursor: text;
+}
+
+[contenteditable="true"]:hover {
+    outline: 1px dashed rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+[contenteditable="true"]:focus {
+    outline: 2px dashed #3b82f6;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.instagram-theme [contenteditable="true"]:focus {
+    outline: 2px dashed #ec4899;
+}
