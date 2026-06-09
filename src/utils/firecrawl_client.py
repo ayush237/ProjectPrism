@@ -24,21 +24,21 @@ class FirecrawlAPIClient:
             "Content-Type": "application/json"
         }
 
-    def scrape_markdown(self, url: str) -> Optional[str]:
+    async def scrape_markdown(self, url: str, session) -> Optional[str]:
         """
-        Scrapes the given URL and returns the content in markdown format.
+        Scrapes the given URL and returns the content in markdown format asynchronously.
         """
         if not self.api_key:
             logging.error("Cannot scrape: FIRECRAWL_API_KEY is not set.")
             return None
 
         api_url = f"{self.base_url}/scrape"
-        payload = json.dumps({"url": url, "formats": ["markdown"]}).encode('utf-8')
+        payload = {"url": url, "formats": ["markdown"]}
         
-        req = urllib.request.Request(api_url, data=payload, headers=self.headers, method="POST")
         try:
-            with urllib.request.urlopen(req) as response:
-                data = json.loads(response.read().decode('utf-8'))
+            async with session.post(api_url, json=payload, headers=self.headers) as response:
+                response.raise_for_status()
+                data = await response.json()
                 return data.get('data', {}).get('markdown', '')
         except Exception as e:
             logging.error(f"Firecrawl scraping failed for {url}: {e}")

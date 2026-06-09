@@ -11,6 +11,13 @@
     *   **Hybrid Deep Agent Upgrade:** Empowered the Researcher to autonomously scrape curated trusted sources (`docs/trusted_sources.md`), execute real-time grounded search on Google via Gemini (`src/utils/deep_search_client.py`), and self-update the `docs/evergreen_topics_seed.md` knowledge base.
     *   **Local Lakehouse Migration:** Transitioned Deep Hunt outputs from Notion cells to the local filesystem (`docs/research_archive/`). Built `write_archive.py` utility and upgraded extraction scripts to dynamically scan for and inject `file:///` paths into the content pipeline.
     *   **Version Control Pipeline Migration:** Deployed automated GitHub Pull Requests via `github_pr_creator.py`. Ensured `.gitignore` protects secrets, and updated Manager & Notification agents to autonomously execute git flows and embed PR review links into the final email digests.
+    *   **Editor-in-Chief Upgrade:** Upgraded the Editor Agent to a Pipeline-Aware Script Doctor with Deep Archive fact-checking and dynamic skill loading.
+    *   **Asset Generation Pipeline (The Viral Director):** Fully deployed the `asset_agent.md` sub-agent. Empowered with a 5-Vector Modality Logic to generate a `storyboard.md` matrix mapping script lines to visuals. Integrated multiple MCP servers for autonomous media generation:
+        *   `pexels-mcp-server` for vertical B-Roll.
+        *   `gemini_image_mcp` for 9:16 Generative AI imagery.
+        *   `typst_mcp` for markdown-to-PNG presentation slides.
+        *   `manim_mcp` for programmatic Python-based diagram animations.
+    *   **Multimodal Notion Extraction:** Upgraded the `notion_integration.py` extraction pipeline. It now utilizes Gemini Vision OCR to transcribe screenshots, explicitly parses `@Notes` and `@Prism` tags to determine context boundaries, and enforces an "Autonomous Expansion" rule via `deep_search_client.py` for the Researcher Agent.
     *   Implemented strict **Context Reset & Pruning Protocol** to prevent token bloat. The Manager must finalize this state file and flush conversational history upon completing execution pipelines.
 *   **Agent Configuration:**
     *   Sub-agent team (Researcher, LinkedIn, Instagram, Notification) fully instantiated.

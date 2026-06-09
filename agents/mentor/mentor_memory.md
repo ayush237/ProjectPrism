@@ -17,6 +17,11 @@
 
 ## Recent Architectural Decisions & Milestones
 * **[2026-05-30] Manager Prompt Optimization:** Upgraded the Manager Agent with Karpathy's CLAUDE.md principles (Goal-Driven Execution, Think Before Coding, Read Before Write, Fail Loud, Token Budget & Checkpoint).
+* **[2026-06-03] Tri-Modal Content Architecture:** Deployed 3 distinct Notion databases (Study Material, Series, Virality) and built automated cron-triggered workflows for extraction and proactive generation.
+* **[2026-06-05] Editor-in-Chief Upgrade:** Deployed the `editor_agent.md` as a user-facing Script Doctor. It leverages `docs/research_archive/` to fact-check scripts and enforce the 3-second hook rule.
+* **[2026-06-08] The Viral Director (Asset Generation):** Deployed `asset_agent.md`. When the Editor finalizes a script, the Viral Director automatically reads it, applies a 5-Vector Modality Logic, and generates a `storyboard.md` table mapping script lines to visuals.
+* **[2026-06-08] MCP Integration:** Connected the Viral Director to 4 distinct MCP servers: `pexels-mcp-server` (B-Roll), `gemini_image_mcp` (Generative AI), `typst_mcp` (Slides), and `manim_mcp` (Programmatic Animated Diagrams). 
+* **[2026-06-09] Multimodal Notion Extraction:** Rewrote the data pipeline to natively support Gemini Vision OCR for screenshots inside Notion. Implemented strict `@Notes`/`@Prism` tag boundaries and an "Autonomous Expansion" mandate for the Researcher.
 
 ## Current Focus / Open Discussions
-* *No open tasks currently. Waiting on user's next architectural challenge.*
+* *The Tri-Modal engine is fully operational. The Asset Generation pipeline is online and generating physical `storyboard.md` files. Notion extraction is now fully multimodal. Awaiting the user's next architectural challenge.*

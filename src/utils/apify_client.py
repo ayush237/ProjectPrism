@@ -1,4 +1,5 @@
 import os
+import asyncio
 import logging
 from typing import Optional
 from apify_client import ApifyClient
@@ -19,7 +20,7 @@ class ApifySocialClient:
         else:
             self.client = ApifyClient(self.api_key)
             
-    def extract_instagram(self, url: str) -> Optional[str]:
+    async def extract_instagram(self, url: str) -> Optional[str]:
         if not self.client: return None
         logging.info(f"Extracting Instagram via Apify: {url}")
         
@@ -32,9 +33,9 @@ class ApifySocialClient:
             "searchLimit": 1
         }
         
-        return self._run_actor_and_format(actor_id, run_input, platform="Instagram")
+        return await asyncio.to_thread(self._run_actor_and_format, actor_id, run_input, "Instagram")
         
-    def extract_twitter(self, url: str) -> Optional[str]:
+    async def extract_twitter(self, url: str) -> Optional[str]:
         if not self.client: return None
         logging.info(f"Extracting Twitter/X via Apify: {url}")
         
@@ -45,9 +46,9 @@ class ApifySocialClient:
             "maxItems": 1
         }
         
-        return self._run_actor_and_format(actor_id, run_input, platform="Twitter/X")
+        return await asyncio.to_thread(self._run_actor_and_format, actor_id, run_input, "Twitter/X")
         
-    def extract_linkedin(self, url: str) -> Optional[str]:
+    async def extract_linkedin(self, url: str) -> Optional[str]:
         if not self.client: return None
         logging.info(f"Extracting LinkedIn via Apify: {url}")
         
@@ -57,7 +58,7 @@ class ApifySocialClient:
             "urls": [url]
         }
         
-        return self._run_actor_and_format(actor_id, run_input, platform="LinkedIn")
+        return await asyncio.to_thread(self._run_actor_and_format, actor_id, run_input, "LinkedIn")
         
     def _run_actor_and_format(self, actor_id: str, run_input: dict, platform: str) -> Optional[str]:
         try:

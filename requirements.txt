@@ -3,3 +3,5 @@ notion-client
 apify-client
 youtube-transcript-api
 yt-dlp
+mcp
+google-genai

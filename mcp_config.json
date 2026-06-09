@@ -1,0 +1,33 @@
+{
+  "mcpServers": {
+    "pexels-mcp-server": {
+      "command": "npx",
+      "args": ["-y", "pexels-mcp-server"],
+      "env": {
+        "PEXELS_API_KEY": "${PEXELS_API_KEY}"
+      }
+    },
+    "gemini_image_mcp": {
+      "command": ".venv/bin/python",
+      "args": ["src/utils/gemini_image_mcp.py"],
+      "env": {
+        "GEMINI_API_KEY": "${GEMINI_API_KEY}",
+        "DYLD_LIBRARY_PATH": "/opt/homebrew/opt/expat/lib"
+      }
+    },
+    "typst_mcp": {
+      "command": ".venv/bin/python",
+      "args": ["src/utils/typst_mcp.py"],
+      "env": {
+        "DYLD_LIBRARY_PATH": "/opt/homebrew/opt/expat/lib"
+      }
+    },
+    "manim_mcp": {
+      "command": ".venv/bin/python",
+      "args": ["src/utils/manim_mcp.py"],
+      "env": {
+        "DYLD_LIBRARY_PATH": "/opt/homebrew/opt/expat/lib"
+      }
+    }
+  }
+}

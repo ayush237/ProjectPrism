@@ -1,4 +1,5 @@
 import logging
+import asyncio
 import yt_dlp
 from typing import Dict, Optional
 
@@ -15,7 +16,10 @@ class YouTubeClient:
     Extracts metadata and transcripts from YouTube video/short URLs.
     """
     
-    def extract(self, url: str) -> Optional[str]:
+    async def extract(self, url: str) -> Optional[str]:
+        return await asyncio.to_thread(self._extract_sync, url)
+
+    def _extract_sync(self, url: str) -> Optional[str]:
         logging.info(f"Extracting YouTube content for {url}")
         
         # 1. Get Metadata via yt-dlp

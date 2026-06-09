@@ -1,0 +1,8 @@
+# This file is used internally by FFMPEG.
+file 'file:/Users/ayush/Documents/StudyAndContentWorkstation/media/videos/transformer_test/720p30/partial_movie_files/TransformerArchitecture/1987512680_3988183183_223132457.mp4'
+file 'file:/Users/ayush/Documents/StudyAndContentWorkstation/media/videos/transformer_test/720p30/partial_movie_files/TransformerArchitecture/2538612922_843344347_3026751495.mp4'
+file 'file:/Users/ayush/Documents/StudyAndContentWorkstation/media/videos/transformer_test/720p30/partial_movie_files/TransformerArchitecture/2538612922_546269299_3127704463.mp4'
+file 'file:/Users/ayush/Documents/StudyAndContentWorkstation/media/videos/transformer_test/720p30/partial_movie_files/TransformerArchitecture/2538612922_2670171380_950636617.mp4'
+file 'file:/Users/ayush/Documents/StudyAndContentWorkstation/media/videos/transformer_test/720p30/partial_movie_files/TransformerArchitecture/2538612922_883589084_3153530617.mp4'
+file 'file:/Users/ayush/Documents/StudyAndContentWorkstation/media/videos/transformer_test/720p30/partial_movie_files/TransformerArchitecture/2538612922_3953272474_2029459037.mp4'
+file 'file:/Users/ayush/Documents/StudyAndContentWorkstation/media/videos/transformer_test/720p30/partial_movie_files/TransformerArchitecture/2538612922_2872842549_707765577.mp4'
