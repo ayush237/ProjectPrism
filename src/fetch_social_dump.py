@@ -7,7 +7,8 @@ from utils.youtube_client import YouTubeClient
 from utils.apify_client import ApifySocialClient
 from utils.url_classifier import URLClassifier, Platform
 
-logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+from utils.logger import get_logger
+logger = get_logger(__name__)s: %(message)s')
 
 class SocialDumpTask:
     """
@@ -16,7 +17,7 @@ class SocialDumpTask:
     def __init__(self):
         self.database_id = os.environ.get("SOCIAL_DUMP_DB_ID")
         if not self.database_id:
-            logging.error("SOCIAL_DUMP_DB_ID environment variable is not set.")
+            logger.error("SOCIAL_DUMP_DB_ID environment variable is not set.", exc_info=True)
             
         try:
             self.notion_client = NotionAPIClient()
@@ -24,18 +25,18 @@ class SocialDumpTask:
             self.youtube_client = YouTubeClient()
             self.apify_client = ApifySocialClient()
         except ValueError as e:
-            logging.error(f"Client initialization failed: {e}")
+            logger.error(f"Client initialization failed: {e}", exc_info=True)
             self.notion_client = None
             
     def execute(self):
         if not self.database_id or not self.notion_client:
             return
 
-        logging.info("Initiating Intelligent Social Dump pipeline...")
+        logger.info("Initiating Intelligent Social Dump pipeline...")
         records = self.notion_client.query_database(self.database_id)
         
         if not records:
-            logging.info("No records found in the Social Dump database.")
+            logger.info("No records found in the Social Dump database.")
             return
 
         for record in records:
@@ -78,7 +79,7 @@ class SocialDumpTask:
                             with open(filepath, 'r', encoding='utf-8') as f:
                                 return f.read()
                         except Exception as e:
-                            logging.error(f"Failed to read local archive {filepath}: {e}")
+                            logger.error(f"Failed to read local archive {filepath}: {e}", exc_info=True)
                 return None
 
             local_archive_content = extract_local_file(notes) or extract_local_file(url)
@@ -90,14 +91,14 @@ class SocialDumpTask:
             platform_value = "LOCAL_ARCHIVE"
             
             if local_archive_content:
-                logging.info(f"Detected Local Lakehouse Archive in record: {title or 'Untitled'}")
+                logger.info(f"Detected Local Lakehouse Archive in record: {title or 'Untitled'}")
                 extracted_content = local_archive_content
                 if not url:
                     url = "Local File"
             else:
                 platform = URLClassifier.classify(url)
                 platform_value = platform.value
-                logging.info(f"Scraping URL: {url} (Identified as {platform_value})")
+                logger.info(f"Scraping URL: {url} (Identified as {platform_value})")
                 
                 if platform == Platform.YOUTUBE:
                     extracted_content = self.youtube_client.extract(url)
@@ -112,7 +113,7 @@ class SocialDumpTask:
                     extracted_content = self.firecrawl_client.scrape_markdown(url)
             
             if not extracted_content:
-                logging.warning(f"Failed to extract content from {url}")
+                logger.warning(f"Failed to extract content from {url}")
                 continue
                 
             # Cleanly tag the output so the Manager Agent knows how to route it

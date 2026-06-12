@@ -1,6 +1,8 @@
 import os
 import asyncio
 import logging
+from utils.logger import get_logger
+logger = get_logger(__name__)
 from typing import Optional
 from apify_client import ApifyClient
 from dotenv import load_dotenv
@@ -15,42 +17,66 @@ class ApifySocialClient:
     def __init__(self, api_key: str = None):
         self.api_key = api_key or os.environ.get("APIFY_API_TOKEN")
         if not self.api_key:
-            logging.error("APIFY_API_TOKEN is not set.")
+            logger.error("APIFY_API_TOKEN is not set.", exc_info=True)
             self.client = None
         else:
             self.client = ApifyClient(self.api_key)
             
     async def extract_instagram(self, url: str) -> Optional[str]:
         if not self.client: return None
-        logging.info(f"Extracting Instagram via Apify: {url}")
+        logger.info(f"Extracting Instagram via Apify: {url}")
+        
+        import re
+        is_profile = not bool(re.search(r"/(?:p|reel|tv)/", url))
         
         # Using a popular Instagram scraper actor
         actor_id = "apify/instagram-scraper"
-        run_input = {
-            "directUrls": [url],
-            "resultsType": "details",
-            "searchType": "hashtag",
-            "searchLimit": 1
-        }
+        
+        if is_profile:
+            run_input = {
+                "directUrls": [url],
+                "resultsType": "posts",
+                "resultsLimit": 1
+            }
+        else:
+            run_input = {
+                "directUrls": [url],
+                "resultsType": "details",
+                "searchType": "hashtag",
+                "searchLimit": 1
+            }
         
         return await asyncio.to_thread(self._run_actor_and_format, actor_id, run_input, "Instagram")
         
     async def extract_twitter(self, url: str) -> Optional[str]:
         if not self.client: return None
-        logging.info(f"Extracting Twitter/X via Apify: {url}")
+        logger.info(f"Extracting Twitter/X via Apify: {url}")
+        
+        import re
+        is_profile = not bool(re.search(r"/status/", url))
         
         # Using a popular Twitter scraper actor
         actor_id = "microworlds/twitter-scraper"
-        run_input = {
-            "searchTerms": [url],
-            "maxItems": 1
-        }
+        
+        if is_profile:
+            handle = url.rstrip('/').split('/')[-1]
+            if '?' in handle:
+                handle = handle.split('?')[0]
+            run_input = {
+                "twitterHandles": [handle],
+                "maxItems": 1
+            }
+        else:
+            run_input = {
+                "searchTerms": [url],
+                "maxItems": 1
+            }
         
         return await asyncio.to_thread(self._run_actor_and_format, actor_id, run_input, "Twitter/X")
         
     async def extract_linkedin(self, url: str) -> Optional[str]:
         if not self.client: return None
-        logging.info(f"Extracting LinkedIn via Apify: {url}")
+        logger.info(f"Extracting LinkedIn via Apify: {url}")
         
         # Using a popular LinkedIn scraper actor
         actor_id = "curious_coder/linkedin-post-scraper"
@@ -92,11 +118,11 @@ class ApifySocialClient:
                 output += f"{text}\n\n"
                 
             if not has_data:
-                logging.warning(f"Apify {platform} extraction returned no data.")
+                logger.warning(f"Apify {platform} extraction returned no data.")
                 return None
                 
             return output
             
         except Exception as e:
-            logging.error(f"Apify {platform} extraction failed: {e}")
+            logger.error(f"Apify {platform} extraction failed: {e}", exc_info=True)
             return None

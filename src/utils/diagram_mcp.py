@@ -1,3 +1,6 @@
+from utils.logger import get_logger
+logger = get_logger(__name__)
+
 import os
 import uuid
 import requests
@@ -32,6 +35,7 @@ def generate_diagram(markup: str, output_name: str) -> str:
             return f"Error from Kroki API: {response.status_code} - {response.text}"
             
     except Exception as e:
+        logger.error(f\"MCP Error: {e}\", exc_info=True)
         return f"Error generating diagram: {str(e)}"
 
 if __name__ == "__main__":

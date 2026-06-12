@@ -1,6 +1,8 @@
 import os
 import json
 import logging
+from utils.logger import get_logger
+logger = get_logger(__name__)
 import urllib.request
 from typing import Optional
 from dotenv import load_dotenv
@@ -16,7 +18,7 @@ class FirecrawlAPIClient:
     def __init__(self, api_key: str = None):
         self.api_key = api_key or os.environ.get("FIRECRAWL_API_KEY")
         if not self.api_key:
-            logging.warning("FIRECRAWL_API_KEY is missing. Scraping capabilities may be limited.")
+            logger.warning("FIRECRAWL_API_KEY is missing. Scraping capabilities may be limited.")
             
         self.base_url = "https://api.firecrawl.dev/v1"
         self.headers = {
@@ -29,7 +31,7 @@ class FirecrawlAPIClient:
         Scrapes the given URL and returns the content in markdown format asynchronously.
         """
         if not self.api_key:
-            logging.error("Cannot scrape: FIRECRAWL_API_KEY is not set.")
+            logger.error("Cannot scrape: FIRECRAWL_API_KEY is not set.", exc_info=True)
             return None
 
         api_url = f"{self.base_url}/scrape"
@@ -41,5 +43,5 @@ class FirecrawlAPIClient:
                 data = await response.json()
                 return data.get('data', {}).get('markdown', '')
         except Exception as e:
-            logging.error(f"Firecrawl scraping failed for {url}: {e}")
+            logger.error(f"Firecrawl scraping failed for {url}: {e}", exc_info=True)
             return None

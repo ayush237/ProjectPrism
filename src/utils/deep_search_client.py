@@ -3,7 +3,8 @@ import logging
 from google import genai
 from google.genai import types
 
-logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+from utils.logger import get_logger
+logger = get_logger(__name__)s: %(message)s')
 
 class DeepSearchClient:
     """
@@ -13,13 +14,13 @@ class DeepSearchClient:
     def __init__(self, model_name="gemini-2.5-pro"):
         api_key = os.environ.get("GEMINI_API_KEY")
         if not api_key:
-            logging.warning("GEMINI_API_KEY environment variable is not set. Client may fail if not authenticated via other means.")
+            logger.warning("GEMINI_API_KEY environment variable is not set. Client may fail if not authenticated via other means.")
             
         self.client = genai.Client(api_key=api_key)
         self.model_name = model_name
         
     def search(self, query: str) -> str:
-        logging.info(f"Executing Deep Search Query via {self.model_name}: '{query}'")
+        logger.info(f"Executing Deep Search Query via {self.model_name}: '{query}'")
         try:
             response = self.client.models.generate_content(
                 model=self.model_name,
@@ -30,7 +31,7 @@ class DeepSearchClient:
             )
             return response.text
         except Exception as e:
-            logging.error(f"Deep Search failed: {e}")
+            logger.error(f"Deep Search failed: {e}", exc_info=True)
             return f"Error executing deep search: {e}"
 
 if __name__ == "__main__":

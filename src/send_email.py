@@ -2,7 +2,8 @@ import argparse
 import logging
 from utils.email_client import SMTPClient
 
-logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+from utils.logger import get_logger
+logger = get_logger(__name__)
 
 class EmailDispatchTask:
     """
@@ -25,7 +26,7 @@ class EmailDispatchTask:
                 
             self.smtp_client.send_email(args.subject, body_content, args.to)
         except FileNotFoundError:
-            logging.error(f"Could not find body file at {args.body_file}")
+            logger.error(f"Could not find body file at {args.body_file}", exc_info=True)
 
 if __name__ == "__main__":
     task = EmailDispatchTask()

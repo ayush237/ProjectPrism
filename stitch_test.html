@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>The Great Acceleration</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#101415",
+                        "outline": "#859399",
+                        "primary-fixed": "#b7eaff",
+                        "secondary-fixed": "#efdbff",
+                        "primary": "#a4e6ff",
+                        "secondary-container": "#7701d0",
+                        "tertiary-container": "#c3c0bf",
+                        "on-primary": "#003543",
+                        "surface-container-high": "#272a2c",
+                        "on-surface": "#e0e3e5",
+                        "on-surface-variant": "#bbc9cf",
+                        "on-tertiary-container": "#4f4e4e",
+                        "surface": "#101415",
+                        "on-primary-fixed": "#001f28",
+                        "surface-container-lowest": "#0b0f10",
+                        "surface-tint": "#4cd6ff",
+                        "tertiary": "#dfdcdb",
+                        "tertiary-fixed-dim": "#c9c6c5",
+                        "on-tertiary-fixed-variant": "#474646",
+                        "on-primary-container": "#00566a",
+                        "on-tertiary": "#313030",
+                        "background": "#101415",
+                        "surface-container-highest": "#323537",
+                        "on-secondary": "#480081",
+                        "inverse-primary": "#00677f",
+                        "on-primary-fixed-variant": "#004e60",
+                        "inverse-surface": "#e0e3e5",
+                        "on-secondary-fixed": "#2c0051",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#6700b5",
+                        "surface-variant": "#323537",
+                        "on-tertiary-fixed": "#1c1b1b",
+                        "on-secondary-container": "#dcb7ff",
+                        "inverse-on-surface": "#2d3133",
+                        "secondary-fixed-dim": "#dcb8ff",
+                        "on-background": "#e0e3e5",
+                        "on-error": "#690005",
+                        "primary-container": "#00d1ff",
+                        "surface-container-low": "#191c1e",
+                        "surface-bright": "#363a3b",
+                        "error-container": "#93000a",
+                        "outline-variant": "#3c494e",
+                        "tertiary-fixed": "#e5e2e1",
+                        "surface-container": "#1d2022",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#4cd6ff",
+                        "secondary": "#dcb8ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "xl": "80px",
+                        "md": "24px",
+                        "lg": "48px",
+                        "gutter": "24px",
+                        "margin": "32px",
+                        "base": "4px",
+                        "xs": "8px",
+                        "sm": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "data-mono": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #050505;
+            overflow-x: hidden;
+            width: 1080px;
+            height: 1920px;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .glass-panel {
+            background: rgba(16, 20, 21, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: inset 0 0 20px rgba(0, 209, 255, 0.05);
+        }
+
+        .neon-accent {
+            color: #00D1FF;
+            text-shadow: 0 0 10px rgba(0, 209, 255, 0.5);
+        }
+
+        .neon-accent-secondary {
+            color: #dcb8ff;
+            text-shadow: 0 0 10px rgba(220, 184, 255, 0.5);
+        }
+
+        .data-line {
+            height: 2px;
+            background: linear-gradient(90deg, rgba(0, 209, 255, 0) 0%, rgba(0, 209, 255, 1) 50%, rgba(0, 209, 255, 0) 100%);
+            box-shadow: 0 0 8px rgba(0, 209, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .data-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+            animation: scanline 2s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 200%;
+            }
+        }
+
+        /* Entrance Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.5s;
+        }
+
+        .delay-2 {
+            animation-delay: 1.0s;
+        }
+
+        .delay-3 {
+            animation-delay: 1.5s;
+        }
+
+        .delay-4 {
+            animation-delay: 2.0s;
+        }
+
+        .delay-5 {
+            animation-delay: 2.5s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Progress Bar Animation */
+        .progress-fill {
+            width: 0%;
+            transition: width 3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .progress-container.active .progress-fill {
+            width: 100%;
+        }
+
+        .progress-container.active .progress-fill-ai {
+            width: 100%;
+            transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="text-on-surface font-body-md">
+    <!-- Background WebGL Shader -->
+    <!-- STITCH_SHADER_START:ANIMATION_1 class="absolute inset-0 w-full h-full z-0 opacity-60" -->
+    <div class="absolute inset-0 w-full h-full z-0 opacity-60" style="display:block;">
+        <canvas id="shader-canvas-ANIMATION_1" style="display:block;width:100%;height:100%"></canvas>
+        <script>
+                (function () {
+                    const canvas = document.getElementById('shader-canvas-ANIMATION_1');
+
+                    // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+                    // This fires on initial layout and whenever the element is resized.
+                    function syncSize() {
+                        const w = canvas.clientWidth || 1280;
+                        const h = canvas.clientHeight || 720;
+                        if (canvas.width !== w || canvas.height !== h) {
+                            canvas.width = w;
+                            canvas.height = h;
+                        }
+                    }
+                    if (typeof ResizeObserver !== 'undefined') {
+                        new ResizeObserver(syncSize).observe(canvas);
+                    }
+                    syncSize();
+
+                    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                    if (!gl) return;
+                    const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+                    const fs = `precision highp float;
+uniform float u_time;
+uniform vec2 u_resolution;
+varying vec2 v_texCoord;
+
+float noise(vec2 p) {
+    return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void main() {
+    vec2 uv = v_texCoord;
+    vec3 color1 = vec3(0.05, 0.05, 0.1); // Deep dark blue
+    vec3 color2 = vec3(0.1, 0.0, 0.2);   // Deep purple
+    
+    // Flowing digital energy effect
+    float speed = u_time * 0.2;
+    float n = sin(uv.x * 10.0 + speed) * cos(uv.y * 10.0 - speed);
+    n += sin(uv.y * 20.0 + speed * 1.5) * 0.5;
+    
+    vec3 finalColor = mix(color1, color2, n * 0.5 + 0.5);
+    
+    // Add subtle digital "grid" or "pulses"
+    float grid = sin(uv.x * 50.0) * sin(uv.y * 50.0);
+    finalColor += vec3(0.0, 0.5, 1.0) * pow(max(0.0, grid), 10.0) * 0.1;
+    
+    gl_FragColor = vec4(finalColor, 1.0);
+}`;
+                    function cs(type, src) {
+                        const s = gl.createShader(type);
+                        gl.shaderSource(s, src);
+                        gl.compileShader(s);
+                        return s;
+                    }
+                    const prog = gl.createProgram();
+                    gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+                    gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+                    gl.linkProgram(prog);
+                    gl.useProgram(prog);
+                    const buf = gl.createBuffer();
+                    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+                    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+                    const pos = gl.getAttribLocation(prog, 'a_position');
+                    gl.enableVertexAttribArray(pos);
+                    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+                    const uTime = gl.getUniformLocation(prog, 'u_time');
+                    const uRes = gl.getUniformLocation(prog, 'u_resolution');
+                    const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+                    // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+                    // Shaders that need normalized coords should use: u_mouse / u_resolution.
+                    let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+                    window.addEventListener('mousemove', (event) => {
+                        const rect = canvas.getBoundingClientRect();
+                        if (rect.width && rect.height) {
+                            const nx = (event.clientX - rect.left) / rect.width;
+                            const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+                            mouse.x = nx * canvas.width;
+                            mouse.y = ny * canvas.height;
+                        }
+                    });
+
+                    function render(t) {
+                        if (typeof ResizeObserver === 'undefined') syncSize();
+                        gl.viewport(0, 0, canvas.width, canvas.height);
+                        if (uTime) gl.uniform1f(uTime, t * 0.001);
+                        if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+                        if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+                        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                        requestAnimationFrame(render);
+                    }
+                    render(0);
+                })();
+        </script>
+    </div>
+    <!-- STITCH_SHADER_END:ANIMATION_1 -->
+    <!-- Top Navigation (Shared Component Integration) -->
+    <header
+        class="bg-surface/10 backdrop-blur-xl border-b border-on-surface-variant/10 fixed top-0 w-full flex justify-between items-center px-margin h-20 z-50">
+        <div class="flex items-center gap-sm">
+            <span class="material-symbols-outlined text-primary text-[24px]">speed</span>
+            <span
+                class="font-headline-lg-mobile text-headline-lg-mobile font-black tracking-tighter text-primary uppercase">NEURAL_FLOW</span>
+        </div>
+        <span
+            class="material-symbols-outlined text-outline text-[24px] cursor-pointer hover:text-primary-container transition-colors active:scale-95 transition-transform">settings</span>
+    </header>
+    <!-- Main Content Canvas -->
+    <main class="relative z-10 flex flex-col justify-center h-full px-[64px] pt-[120px] pb-[80px]">
+        <!-- Header Section -->
+        <section class="mb-[80px] fade-in-up delay-1">
+            <div class="flex items-center gap-sm mb-md">
+                <span
+                    class="px-sm py-base rounded-full bg-primary/20 border border-primary/50 font-data-mono text-data-mono text-primary uppercase tracking-widest text-[16px]">SYS.REPORT_04</span>
+                <div class="h-[1px] flex-grow bg-gradient-to-r from-primary/50 to-transparent"></div>
+            </div>
+            <h1 class="font-display-lg text-display-lg uppercase font-black tracking-tighter leading-[1.1] mb-md">
+                <span class="block text-on-surface">THE GREAT</span>
+                <span class="block neon-accent text-[72px]">ACCELERATION</span>
+            </h1>
+            <p class="font-body-md text-body-md text-on-surface-variant max-w-[80%] text-[24px] leading-relaxed">
+                Analyzing the velocity of technological integration. A comparative study of foundational shifts.
+            </p>
+        </section>
+        <!-- Core Visualization Section -->
+        <section class="flex flex-col gap-[64px] mb-[120px] fade-in-up delay-2">
+            <!-- Internet Adoption (1x) -->
+            <div class="glass-panel rounded-xl p-[48px] relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-sm opacity-20 group-hover:opacity-100 transition-opacity">
+                    <span class="material-symbols-outlined text-[64px] text-outline">language</span>
+                </div>
+                <div class="flex justify-between items-end mb-lg relative z-10">
+                    <div>
+                        <h2
+                            class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-xs uppercase tracking-wide">
+                            Internet Adoption</h2>
+                        <span class="font-data-mono text-data-mono text-outline text-[18px]">Base Velocity
+                            Threshold</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-display-lg text-display-lg text-tertiary-container">1X</span>
+                    </div>
+                </div>
+                <div
+                    class="progress-container w-full h-[16px] bg-surface-container-highest rounded-full overflow-hidden mb-sm border border-outline-variant/30 relative z-10">
+                    <div class="progress-fill h-full bg-outline-variant rounded-full relative">
+                        <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-r from-transparent to-white/20">
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="flex justify-between font-data-mono text-data-mono text-on-surface-variant text-[16px] relative z-10">
+                    <span>T-0</span>
+                    <span>7 Years to 50M Users</span>
+                </div>
+            </div>
+            <!-- VS Divider -->
+            <div class="flex items-center justify-center fade-in-up delay-3 relative z-10">
+                <div class="w-full h-[1px] bg-outline-variant/30"></div>
+                <div
+                    class="px-md font-data-mono text-data-mono text-outline uppercase tracking-[0.2em] text-[20px] bg-background">
+                    VERSUS</div>
+                <div class="w-full h-[1px] bg-outline-variant/30"></div>
+            </div>
+            <!-- AI Adoption (10x) -->
+            <div
+                class="glass-panel rounded-xl p-[48px] relative overflow-hidden border-primary/30 shadow-[0_0_40px_rgba(0,209,255,0.1)] group">
+                <div class="absolute top-0 right-0 p-sm opacity-20 group-hover:opacity-100 transition-opacity">
+                    <span class="material-symbols-outlined text-[64px] text-primary"
+                        style="font-variation-settings: 'FILL' 1;">psychology</span>
+                </div>
+                <!-- Animated Background Glow -->
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary-container/5 mix-blend-screen pointer-events-none">
+                </div>
+                <div class="flex justify-between items-end mb-lg relative z-10">
+                    <div>
+                        <h2
+                            class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-xs uppercase tracking-wide flex items-center gap-xs">
+                            AI Adoption
+                            <span class="material-symbols-outlined text-primary text-[24px]">bolt</span>
+                        </h2>
+                        <span class="font-data-mono text-data-mono text-primary text-[18px]">Hyper-Accelerated
+                            Trajectory</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-display-lg text-display-lg neon-accent font-black">10X</span>
+                    </div>
+                </div>
+                <div
+                    class="progress-container active w-full h-[16px] bg-surface-container-highest rounded-full overflow-hidden mb-sm border border-primary/20 relative z-10 shadow-[inset_0_0_10px_rgba(0,0,0,0.5)]">
+                    <div
+                        class="progress-fill-ai h-full bg-gradient-to-r from-primary-container to-secondary-container rounded-full relative">
+                        <!-- Fast Scanline effect for AI -->
+                        <div class="absolute top-0 left-0 right-0 bottom-0 overflow-hidden rounded-full">
+                            <div
+                                class="w-full h-full bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.8),transparent)] animate-[scanline_0.5s_linear_infinite] absolute top-0 -left-full">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-between font-data-mono text-data-mono text-primary text-[16px] relative z-10">
+                    <span>T-0</span>
+                    <span class="font-bold">&lt; 1 Month to 50M Users</span>
+                </div>
+            </div>
+        </section>
+        <!-- Data Insight Bento Box -->
+        <section class="grid grid-cols-2 gap-md fade-in-up delay-4 mb-xl">
+            <div
+                class="glass-panel rounded-lg p-lg border-l-4 border-l-primary flex flex-col justify-between h-[200px]">
+                <span class="material-symbols-outlined text-primary text-[32px] mb-xs">trending_up</span>
+                <div>
+                    <h3 class="font-data-mono text-data-mono text-outline uppercase tracking-wider mb-xs text-[14px]">
+                        Compound Growth</h3>
+                    <p class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Exponential paradigm
+                        shift in global deployment metrics.</p>
+                </div>
+            </div>
+            <div class="glass-panel rounded-lg p-lg flex flex-col justify-between h-[200px] relative overflow-hidden">
+                <div
+                    class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-50">
+                </div>
+                <span class="material-symbols-outlined text-secondary text-[32px] mb-xs relative z-10">hub</span>
+                <div class="relative z-10">
+                    <h3 class="font-data-mono text-data-mono text-outline uppercase tracking-wider mb-xs text-[14px]">
+                        Infrastructure</h3>
+                    <p class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Zero-friction
+                        distribution via existing web rails.</p>
+                </div>
+            </div>
+        </section>
+        <!-- Dynamic Data Line Graphic -->
+        <div class="mt-auto w-full fade-in-up delay-5">
+            <div class="data-line w-full mb-sm"></div>
+            <div
+                class="flex justify-between font-data-mono text-data-mono text-outline text-[14px] uppercase tracking-widest">
+                <span>Status: Processing</span>
+                <span>Signal: Optimal</span>
+            </div>
+        </div>
+    </main>
+    <!-- Footer (Shared Component Integration) -->
+    <footer
+        class="bg-surface-container-lowest/50 backdrop-blur-md border-t border-outline-variant/10 w-full py-sm flex flex-col justify-between items-center px-margin gap-xs z-50 absolute bottom-0">
+        <div class="w-full flex justify-between items-center">
+            <span class="font-label-sm text-label-sm text-outline">© 2024 QUANTUM_DATA_LABS</span>
+            <div class="flex gap-md">
+                <span
+                    class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all cursor-pointer">Documentation</span>
+                <span
+                    class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all cursor-pointer">Methodology</span>
+                <span
+                    class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-all cursor-pointer">API</span>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Trigger animations after a short delay to ensure DOM is ready
+        setTimeout(() => {
+            const containers = document.querySelectorAll('.progress-container');
+            containers.forEach(container => {
+                // Remove active class briefly to reset, then add to trigger CSS transition
+                container.classList.remove('active');
+                // Force reflow
+                void container.offsetWidth;
+                container.classList.add('active');
+            });
+        }, 1500); // Wait for fade-in animations to progress before starting bars
+    </script>
+</body>
+
+</html>

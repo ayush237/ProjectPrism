@@ -1,3 +1,6 @@
+from utils.logger import get_logger
+logger = get_logger(__name__)
+
 import os
 import sys
 import uuid
@@ -60,6 +63,7 @@ def compile_manim_scene(python_code: str, scene_class_name: str, output_name: st
             return f"Compilation succeeded, but output file could not be located in {media_dir}. Stdout: {result.stdout}"
             
     except Exception as e:
+        logger.error(f\"MCP Error: {e}\", exc_info=True)
         return f"Error running Manim: {str(e)}"
 
 if __name__ == "__main__":

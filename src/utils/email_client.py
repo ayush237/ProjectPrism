@@ -1,6 +1,8 @@
 import os
 import smtplib
 import logging
+from utils.logger import get_logger
+logger = get_logger(__name__)
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
@@ -20,7 +22,7 @@ class SMTPClient:
         self.password = password or os.environ.get("SMTP_PASS")
         
         if not self.user or not self.password:
-            logging.warning("SMTP credentials missing. Email dispatch will fail.")
+            logger.warning("SMTP credentials missing. Email dispatch will fail.")
 
     def send_email(self, subject: str, body_html: str, recipient: str = None) -> bool:
         """
@@ -29,7 +31,7 @@ class SMTPClient:
         target_email = recipient or os.environ.get("ALERT_EMAIL")
         
         if not all([self.user, self.password, target_email]):
-            logging.error("Missing required credentials/recipient. Cannot send email.")
+            logger.error("Missing required credentials/recipient. Cannot send email.", exc_info=True)
             return False
             
         try:
@@ -47,8 +49,8 @@ class SMTPClient:
             server.sendmail(self.user, target_email, msg.as_string())
             server.quit()
             
-            logging.info(f"Email successfully dispatched to {target_email}")
+            logger.info(f"Email successfully dispatched to {target_email}")
             return True
         except Exception as e:
-            logging.error(f"SMTP delivery failed: {e}")
+            logger.error(f"SMTP delivery failed: {e}", exc_info=True)
             return False
