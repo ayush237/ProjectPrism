@@ -83,7 +83,7 @@ async def main():
             
             # Extract Title
             props = page.get("properties", {})
-            title_prop = props.get("Name", {})
+            title_prop = props.get("Topic Name") or props.get("Name") or props.get("Title") or {}
             title = "Untitled"
             if title_prop.get("type") == "title":
                 title_parts = title_prop.get("title", [])
@@ -214,7 +214,7 @@ async def main():
                     try:
                         new_page = await notion_client.create_page(session, kanban_db, kanban_props)
                         if new_page:
-                            notion_deep_link = new_page.get("url", "")
+                            notion_deep_link = f"https://www.notion.so/{kanban_db.replace('-', '')}"
                     except Exception as e:
                         logger.error(f"Failed to create Kanban card for {title}: {e}")
                         
