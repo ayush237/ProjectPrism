@@ -75,11 +75,11 @@ def create_pr():
             print(f"PR_URL: {pr_url}")
             
         # Return to main after successful push
-        run_cmd("git checkout main")
+        run_cmd("git checkout -f main", exit_on_error=False)
         
     except urllib.error.HTTPError as e:
         logger.error(f"Failed to create PR: {e.read().decode('utf-8')}", exc_info=True)
-        run_cmd("git checkout main")
+        run_cmd("git checkout -f main", exit_on_error=False)
         sys.exit(1)
 
 if __name__ == "__main__":

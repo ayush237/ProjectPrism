@@ -34,3 +34,11 @@ NoneType: None
 [2026-06-13 05:15:42,696] [INFO] [email_client] - Email successfully dispatched to ayush.xs48@gmail.com
 [2026-06-13 05:16:42,598] [ERROR] [github_pr_creator] - Missing GITHUB_PAT or GITHUB_REPO in environment variables.
 NoneType: None
+[2026-06-13 05:17:19,033] [INFO] [github_pr_creator] - Pushing branch auto-update-2026-06-13-051718 to remote...
+[2026-06-13 05:17:22,368] [INFO] [github_pr_creator] - Raising Pull Request via GitHub API...
+[2026-06-13 05:17:23,760] [ERROR] [github_pr_creator] - Error running 'git checkout main': error: Your local changes to the following files would be overwritten by checkout:
+	logs/prism_system.log
+Please commit your changes or stash them before you switch branches.
+Aborting
+NoneType: None
+[2026-06-13 18:19:28,181] [INFO] [email_client] - Email successfully dispatched to ayush.xs48@gmail.com
