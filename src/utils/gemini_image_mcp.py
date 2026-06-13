@@ -1,3 +1,6 @@
+from utils.logger import get_logger
+logger = get_logger(__name__)
+
 import os
 import uuid
 from mcp.server.fastmcp import FastMCP
@@ -48,6 +51,7 @@ def generate_vertical_image(prompt: str) -> str:
             
         return f"Image generated successfully. Saved to: {filepath}"
     except Exception as e:
+        logger.error(f\"MCP Error: {e}\", exc_info=True)
         return f"Error generating image: {str(e)}"
 
 if __name__ == "__main__":

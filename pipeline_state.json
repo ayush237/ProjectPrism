@@ -1,0 +1,26 @@
+{
+  "current_status": "Testing Logging",
+  "last_execution_time": "2026-06-10T07:55:05.352428+00:00",
+  "active_task": "",
+  "errors": [],
+  "cron_history": {
+    "Study Material": [
+      {
+        "date": "2026-06-10",
+        "status": "SUCCESS"
+      }
+    ],
+    "Series Pipeline": [],
+    "Evergreen Hunt": [],
+    "Latest Hunt": [],
+    "Vector Sync": [
+      {
+        "date": "2026-06-10",
+        "status": "FAIL"
+      }
+    ]
+  },
+  "recent_logs": [
+    "[2026-06-10 12:37:37,619] [ERROR] [<string>] - This is a simulated critical database failure."
+  ]
+}

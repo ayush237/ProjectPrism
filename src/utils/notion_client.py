@@ -1,6 +1,8 @@
 import os
 import json
 import logging
+from utils.logger import get_logger
+logger = get_logger(__name__)
 import asyncio
 import hashlib
 from typing import List, Dict, Optional, Tuple
@@ -44,17 +46,17 @@ class NotionAPIClient:
             async with session.post(url, json=data, headers=self.headers) as response:
                 if response.status != 200:
                     error_msg = await response.text()
-                    logging.error(f"Failed to query Notion Database {formatted_db_id}: HTTP {response.status}: {error_msg}")
+                    logger.error(f"Failed to query Notion Database {formatted_db_id}: HTTP {response.status}: {error_msg}", exc_info=True)
                     return []
                 response_data = await response.json()
                 return response_data.get('results', [])
         except Exception as e:
-            logging.error(f"Failed to query Notion Database {formatted_db_id}: {e}")
+            logger.error(f"Failed to query Notion Database {formatted_db_id}: {e}", exc_info=True)
             return []
 
-    async def fetch_done_tasks(self, session, database_id: str, week_filter: str = "Week 1") -> List[Dict]:
+    async def fetch_done_tasks(self, session, database_id: str) -> List[Dict]:
         """
-        Domain-specific method for the Study Workstation: Fetches tasks marked 'Done' for a specific week.
+        Domain-specific method for the Study Workstation: Fetches tasks marked 'Done' and not yet processed.
         """
         results = await self.query_database(session, database_id)
         filtered_pages = []
@@ -66,28 +68,68 @@ class NotionAPIClient:
             status_prop = props.get("Status", {})
             status_val = None
             if status_prop.get("type") == "status":
-                status_val = status_prop.get("status", {}).get("name")
+                status_obj = status_prop.get("status")
+                status_val = status_obj.get("name") if status_obj else None
             elif status_prop.get("type") == "select":
                 select_obj = status_prop.get("select")
                 if select_obj:
                     status_val = select_obj.get("name")
                     
-            # Extract Week
-            week_prop = props.get("Week", {})
-            week_val = None
-            if week_prop.get("type") == "select":
-                select_obj = week_prop.get("select")
-                if select_obj:
-                    week_val = select_obj.get("name")
-            elif week_prop.get("type") == "rich_text":
-                rich_text = week_prop.get("rich_text", [])
-                if rich_text:
-                    week_val = "".join([t.get("plain_text", "") for t in rich_text])
+            # Extract Pipeline Processed
+            processed_prop = props.get("Pipeline Processed", {})
+            is_processed = False
+            if processed_prop.get("type") == "checkbox":
+                is_processed = processed_prop.get("checkbox", False)
                     
-            if status_val == "Done" and week_val == week_filter:
+            if status_val == "Done" and not is_processed:
                 filtered_pages.append(page)
                 
         return filtered_pages
+
+    async def mark_page_as_processed(self, session, page_id: str):
+        url = f"{self.base_url}/pages/{page_id}"
+        payload = {
+            "properties": {
+                "Pipeline Processed": {
+                    "checkbox": True
+                }
+            }
+        }
+        try:
+            async with session.patch(url, json=payload, headers=self.headers) as response:
+                if response.status not in [200, 201]:
+                    error_msg = await response.text()
+                    logger.error(f"Failed to mark page {page_id} as processed: HTTP {response.status}: {error_msg}", exc_info=True)
+        except Exception as e:
+            logger.error(f"Failed to mark page {page_id} as processed: {e}", exc_info=True)
+
+    async def get_page(self, session, page_id: str) -> Optional[Dict]:
+        url = f"{self.base_url}/pages/{page_id}"
+        try:
+            async with session.get(url, headers=self.headers) as response:
+                if response.status == 200:
+                    return await response.json()
+                else:
+                    logger.error(f"Failed to fetch page {page_id}: HTTP {response.status}")
+                    return None
+        except Exception as e:
+            logger.error(f"Failed to fetch page {page_id}: {e}", exc_info=True)
+            return None
+
+    async def update_page_properties(self, session, page_id: str, properties: dict) -> bool:
+        url = f"{self.base_url}/pages/{page_id}"
+        payload = {"properties": properties}
+        try:
+            async with session.patch(url, json=payload, headers=self.headers) as response:
+                if response.status in [200, 201]:
+                    return True
+                else:
+                    error_msg = await response.text()
+                    logger.error(f"Failed to update page {page_id}: HTTP {response.status}: {error_msg}")
+                    return False
+        except Exception as e:
+            logger.error(f"Failed to update page {page_id}: {e}", exc_info=True)
+            return False
 
     async def _perform_ocr(self, session, image_url: str, block_id: str) -> str:
         cache_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'temp', 'ocr_cache'))
@@ -103,9 +145,14 @@ class NotionAPIClient:
                 response.raise_for_status()
                 image_bytes = await response.read()
                 
-            client = genai.Client()
+            from google.genai import types
+            retry_config = types.HttpRetryOptions(
+                initial_delay=2.0,
+                attempts=5
+            )
+            client = genai.Client(http_options={'retry_options': retry_config})
             response = await client.aio.models.generate_content(
-                model='gemini-2.5-flash',
+                model='gemini-3.1-pro-preview',
                 contents=[
                     'Transcribe any text, handwriting, or diagrams from the image.',
                     {'mime_type': 'image/jpeg', 'data': image_bytes}
@@ -116,7 +163,7 @@ class NotionAPIClient:
                 f.write(ocr_text)
             return ocr_text
         except Exception as e:
-            logging.error(f"OCR failed for block {block_id}: {e}")
+            logger.error(f"OCR failed for block {block_id}: {e}", exc_info=True)
             return ""
 
     async def extract_page_content(self, session, page_id: str) -> Tuple[str, str]:
@@ -132,7 +179,7 @@ class NotionAPIClient:
                 data = await response.json()
                 blocks = data.get("results", [])
         except Exception as e:
-            logging.error(f"Failed to fetch blocks for page {page_id}: {e}")
+            logger.error(f"Failed to fetch blocks for page {page_id}: {e}", exc_info=True)
             return "", ""
             
         user_notes_lines = []
@@ -247,9 +294,9 @@ class NotionAPIClient:
             async with session.post(url, json=payload, headers=self.headers) as response:
                 if response.status not in [200, 201]:
                     error_msg = await response.text()
-                    logging.error(f"Failed to create Notion Page in DB {formatted_db_id}: HTTP {response.status}: {error_msg}")
+                    logger.error(f"Failed to create Notion Page in DB {formatted_db_id}: HTTP {response.status}: {error_msg}", exc_info=True)
                     return None
                 return await response.json()
         except Exception as e:
-            logging.error(f"Failed to create Notion Page in DB {formatted_db_id}: {e}")
+            logger.error(f"Failed to create Notion Page in DB {formatted_db_id}: {e}", exc_info=True)
             return None

@@ -7,7 +7,8 @@ from utils.youtube_client import YouTubeClient
 from utils.apify_client import ApifySocialClient
 from utils.url_classifier import URLClassifier, Platform
 
-logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+from utils.logger import get_logger
+logger = get_logger(__name__)s: %(message)s')
 
 class TrustedSourcesTask:
     """
@@ -21,7 +22,7 @@ class TrustedSourcesTask:
         
     def extract_urls_from_markdown(self, filepath: str) -> list[str]:
         if not os.path.exists(filepath):
-            logging.error(f"File not found: {filepath}")
+            logger.error(f"File not found: {filepath}", exc_info=True)
             return []
         
         with open(filepath, 'r', encoding='utf-8') as f:
@@ -37,14 +38,14 @@ class TrustedSourcesTask:
         
         urls = self.extract_urls_from_markdown(sources_file)
         if not urls:
-            logging.warning("No URLs found in trusted_sources.md")
+            logger.warning("No URLs found in trusted_sources.md")
             return
             
         output_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'content_outputs'))
         os.makedirs(output_dir, exist_ok=True)
         output_path = os.path.join(output_dir, 'latest_trends_raw.txt')
         
-        logging.info(f"Processing {len(urls)} trusted sources...")
+        logger.info(f"Processing {len(urls)} trusted sources...")
         
         try:
             with open(output_path, 'w', encoding='utf-8') as f:
@@ -56,7 +57,7 @@ class TrustedSourcesTask:
                         continue
                         
                     platform = URLClassifier.classify(url)
-                    logging.info(f"Scraping {url} (Identified as {platform.value})")
+                    logger.info(f"Scraping {url} (Identified as {platform.value})")
                     
                     extracted_content = None
                     
@@ -80,12 +81,12 @@ class TrustedSourcesTask:
                         f.write(f"--- SOURCE: {url} ---\n")
                         f.write(f"{extracted_content}\n\n")
                     else:
-                        logging.warning(f"Failed to extract content from {url}")
+                        logger.warning(f"Failed to extract content from {url}")
                         
-            logging.info(f"Successfully processed trusted sources into {output_path}")
+            logger.info(f"Successfully processed trusted sources into {output_path}")
             
         except Exception as e:
-            logging.error(f"Failed to write trusted sources data: {e}")
+            logger.error(f"Failed to write trusted sources data: {e}", exc_info=True)
 
 if __name__ == "__main__":
     task = TrustedSourcesTask()

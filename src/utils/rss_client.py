@@ -2,6 +2,8 @@ import urllib.request
 import xml.etree.ElementTree as ET
 import ssl
 import logging
+from utils.logger import get_logger
+logger = get_logger(__name__)
 from typing import List, Dict
 
 class RSSFeedClient:
@@ -42,5 +44,5 @@ class RSSFeedClient:
                 
             return items
         except Exception as e:
-            logging.error(f"Failed to fetch or parse RSS feed at {url}: {e}")
+            logger.error(f"Failed to fetch or parse RSS feed at {url}: {e}", exc_info=True)
             return []

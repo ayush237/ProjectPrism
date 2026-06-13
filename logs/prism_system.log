@@ -1,0 +1,36 @@
+[2026-06-10 12:37:37,619] [ERROR] [<string>] - This is a simulated critical database failure.
+[2026-06-13 04:57:14,552] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-8055-9ba8-eaf96746d211: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Status is not a property that exists. Pipeline Processed is not a property that exists.","request_id":"3f221d5d-1abe-46fb-94eb-3900664dec5b"}
+NoneType: None
+[2026-06-13 04:57:14,961] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-8055-9ba8-eaf96746d211: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Status is not a property that exists. Pipeline Processed is not a property that exists.","request_id":"a5c9a170-87f5-40e9-be68-42f232d804c9"}
+NoneType: None
+[2026-06-13 04:57:15,363] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-8055-9ba8-eaf96746d211: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Status is not a property that exists. Pipeline Processed is not a property that exists.","request_id":"a40a0003-1b4c-499b-81b5-ec944da90eda"}
+NoneType: None
+[2026-06-13 04:57:15,669] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-8055-9ba8-eaf96746d211: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Status is not a property that exists. Pipeline Processed is not a property that exists.","request_id":"1d7a67dc-22ef-4b84-be23-88421dd80abe"}
+NoneType: None
+[2026-06-13 04:57:15,945] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-8055-9ba8-eaf96746d211: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Status is not a property that exists. Pipeline Processed is not a property that exists.","request_id":"e3157201-cc87-4306-9b64-adb8ded60c40"}
+NoneType: None
+[2026-06-13 04:57:16,283] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-8055-9ba8-eaf96746d211: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Status is not a property that exists. Pipeline Processed is not a property that exists.","request_id":"190af7d5-c0f0-4964-b13f-9ef44f415c59"}
+NoneType: None
+[2026-06-13 04:57:16,598] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-8055-9ba8-eaf96746d211: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Status is not a property that exists. Pipeline Processed is not a property that exists.","request_id":"08889376-c0db-460d-b5f8-62814f40146e"}
+NoneType: None
+[2026-06-13 05:07:09,086] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-806f-874a-c8d59a2500e2: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Name is not a property that exists.","request_id":"e98dbe19-d481-4ab0-ad49-14a28c677a5b"}
+NoneType: None
+[2026-06-13 05:07:09,391] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-806f-874a-c8d59a2500e2: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Name is not a property that exists.","request_id":"cddcc22c-f1a5-4f43-8ba0-70218014d639"}
+NoneType: None
+[2026-06-13 05:07:09,909] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-806f-874a-c8d59a2500e2: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Name is not a property that exists.","request_id":"d7b9fad1-7c09-4154-b1d3-d80956c8a176"}
+NoneType: None
+[2026-06-13 05:07:10,263] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-806f-874a-c8d59a2500e2: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Name is not a property that exists.","request_id":"9dec4894-cd38-4ec6-9179-06f604881d29"}
+NoneType: None
+[2026-06-13 05:07:10,621] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-806f-874a-c8d59a2500e2: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Name is not a property that exists.","request_id":"83f30c05-46cc-4c94-936b-d2e3e5757d66"}
+NoneType: None
+[2026-06-13 05:07:10,972] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-806f-874a-c8d59a2500e2: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Name is not a property that exists.","request_id":"0afd6a87-2c33-4308-9c6d-2761ccbf34cd"}
+NoneType: None
+[2026-06-13 05:07:11,338] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-806f-874a-c8d59a2500e2: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Name is not a property that exists.","request_id":"ddd5966c-f237-4ec3-89ff-30f177b835bc"}
+NoneType: None
+[2026-06-13 05:11:43,629] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-8055-9ba8-eaf96746d211: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Stage is expected to be select.","request_id":"43e92107-ad0e-446c-ad1c-937df056b759"}
+NoneType: None
+[2026-06-13 05:11:43,901] [ERROR] [notion_client] - Failed to create Notion Page in DB 37b7598f-2724-8055-9ba8-eaf96746d211: HTTP 400: {"object":"error","status":400,"code":"validation_error","message":"Stage is expected to be select.","request_id":"2649d69e-d72a-4747-a755-31c89107cdad"}
+NoneType: None
+[2026-06-13 05:15:42,696] [INFO] [email_client] - Email successfully dispatched to ayush.xs48@gmail.com
+[2026-06-13 05:16:42,598] [ERROR] [github_pr_creator] - Missing GITHUB_PAT or GITHUB_REPO in environment variables.
+NoneType: None

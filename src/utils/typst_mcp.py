@@ -1,3 +1,6 @@
+from utils.logger import get_logger
+logger = get_logger(__name__)
+
 import os
 import uuid
 import subprocess
@@ -36,6 +39,7 @@ def compile_vertical_slide(markup: str, output_name: str) -> str:
             
         return f"Slide compiled successfully. Saved to: {png_filename}"
     except Exception as e:
+        logger.error(f\"MCP Error: {e}\", exc_info=True)
         return f"Error compiling slide: {str(e)}"
 
 if __name__ == "__main__":

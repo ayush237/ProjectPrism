@@ -3,7 +3,8 @@ import sys
 import argparse
 import logging
 
-logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+from utils.logger import get_logger
+logger = get_logger(__name__)s: %(message)s')
 
 def write_archive(filename, content):
     """
@@ -28,7 +29,7 @@ def write_archive(filename, content):
         print(f"ABSOLUTE PATH: file://{file_path}")
         print("You must append this path to the Virality Database row using write_notion_row.py")
     except Exception as e:
-        logging.error(f"Failed to write archive: {e}")
+        logger.error(f"Failed to write archive: {e}", exc_info=True)
         sys.exit(1)
 
 if __name__ == "__main__":
@@ -41,7 +42,7 @@ if __name__ == "__main__":
     content = sys.stdin.read()
         
     if not content.strip():
-        logging.error("No content provided via stdin.")
+        logger.error("No content provided via stdin.", exc_info=True)
         sys.exit(1)
         
     write_archive(args.filename, content)

@@ -6,8 +6,12 @@ import urllib.request
 import urllib.error
 from datetime import datetime
 import logging
+from dotenv import load_dotenv
 
-logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+load_dotenv()
+
+from utils.logger import get_logger
+logger = get_logger(__name__)
 
 def run_cmd(cmd, exit_on_error=True):
     result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
@@ -15,7 +19,7 @@ def run_cmd(cmd, exit_on_error=True):
         pat = os.environ.get("GITHUB_PAT", "")
         safe_cmd = cmd.replace(pat, "***") if pat else cmd
         safe_err = result.stderr.replace(pat, "***") if pat else result.stderr
-        logging.error(f"Error running '{safe_cmd}': {safe_err}")
+        logger.error(f"Error running '{safe_cmd}': {safe_err}", exc_info=True)
         sys.exit(1)
     return result.stdout.strip()
 
@@ -29,7 +33,7 @@ def create_pr():
             repo = repo[:-4]
     
     if not pat or not repo:
-        logging.error("Missing GITHUB_PAT or GITHUB_REPO in environment variables.")
+        logger.error("Missing GITHUB_PAT or GITHUB_REPO in environment variables.", exc_info=True)
         sys.exit(1)
 
     date_str = datetime.now().strftime("%Y-%m-%d-%H%M%S")
@@ -38,7 +42,7 @@ def create_pr():
     # Check if there are changes to commit before branching
     status = subprocess.run("git status --porcelain", shell=True, capture_output=True, text=True).stdout.strip()
     if not status:
-        logging.info("No changes to commit. Skipping PR creation.")
+        logger.info("No changes to commit. Skipping PR creation.")
         return
 
     # Git commands
@@ -46,11 +50,11 @@ def create_pr():
     run_cmd("git add .")
     run_cmd("git commit -m 'chore: Auto-generated content & research updates'")
     
-    logging.info(f"Pushing branch {branch_name} to remote...")
+    logger.info(f"Pushing branch {branch_name} to remote...")
     run_cmd(f"git push -u https://{pat}@github.com/{repo}.git {branch_name}")
     
     # GitHub API PR Creation
-    logging.info("Raising Pull Request via GitHub API...")
+    logger.info("Raising Pull Request via GitHub API...")
     url = f"https://api.github.com/repos/{repo}/pulls"
     data = {
         "title": f"Auto-Update: Content & Research ({date_str})",
@@ -74,7 +78,7 @@ def create_pr():
         run_cmd("git checkout main")
         
     except urllib.error.HTTPError as e:
-        logging.error(f"Failed to create PR: {e.read().decode('utf-8')}")
+        logger.error(f"Failed to create PR: {e.read().decode('utf-8')}", exc_info=True)
         run_cmd("git checkout main")
         sys.exit(1)
 
