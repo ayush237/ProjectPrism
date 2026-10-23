@@ -6,6 +6,11 @@ logger = get_logger(__name__)
 from typing import Optional
 from apify_client import ApifyClient
 from dotenv import load_dotenv
+from utils.linkedin_apify_adapter import (
+    LINKEDIN_ACTOR_ID,
+    alias_linkedin_item,
+    linkedin_run_input,
+)
 
 load_dotenv()
 
@@ -78,12 +83,9 @@ class ApifySocialClient:
         if not self.client: return None
         logger.info(f"Extracting LinkedIn via Apify: {url}")
         
-        # Using a popular LinkedIn scraper actor
-        actor_id = "curious_coder/linkedin-post-scraper"
-        run_input = {
-            "urls": [url]
-        }
-        
+        actor_id = LINKEDIN_ACTOR_ID
+        run_input = linkedin_run_input(url)
+
         return await asyncio.to_thread(self._run_actor_and_format, actor_id, run_input, "LinkedIn")
         
     def _run_actor_and_format(self, actor_id: str, run_input: dict, platform: str) -> Optional[str]:
@@ -95,7 +97,8 @@ class ApifySocialClient:
             output = f"# {platform} Extraction\n\n"
             has_data = False
             
-            for item in self.client.dataset(run["defaultDatasetId"]).iterate_items():
+            for raw_item in self.client.dataset(run["defaultDatasetId"]).iterate_items():
+                item = alias_linkedin_item(raw_item) if platform == "LinkedIn" else raw_item
                 has_data = True
                 
                 # Dynamic metadata extraction based on whatever the actor returns
